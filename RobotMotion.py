@@ -89,7 +89,6 @@ def main():
     while(1):
         ret_l, im_l = cap_l.read()
         
-        # undistort
         newcamera, roi = cv2.getOptimalNewCameraMatrix(K, d, (640,480), 0)
         newim_l = cv2.undistort(im_l, K, d, None, newcamera)
 

@@ -11,7 +11,12 @@
 #define GOAL_SPEED 32
 #define GOAL_POSITION 30
 
-#define NATURAL_SPEED 100  // as botany
+int NaturalSpeed = 100;  // as botany
+
+int ASpeed = 400;
+int BSpeed = 300;
+int CSpeed = 200;
+int DSpeed = 100;
 
 double DxSpeed = 300;
 int SpeedID = 'a';
@@ -29,10 +34,10 @@ void setup() {
   Dxl.jointMode(RACHIS_ID);
   
   // Initial position
-  //Dxl.setPosition(BASE_ID, 150, 300);
-  //Dxl.setPosition(PEDUNCLE_ID, 0, 300);
-  //Dxl.setPosition(RACHIS_ID, 512, 300);
-  //delay(1000);// it has more delay time for slow movement
+  Dxl.setPosition(BASE_ID, 150, 300);
+  Dxl.setPosition(PEDUNCLE_ID, 0, 300);
+  Dxl.setPosition(RACHIS_ID, 512, 300);
+  delay(1000);// it has more delay time for slow movement
 }
 
 void loop() {  
@@ -49,37 +54,65 @@ void loop() {
   //delay(2000);// it has more delay time for slow movement
   
   if(SpeedID == 'a') {
-    digitalWrite(BOARD_LED_PIN, HIGH); // set to as HIGH LED is turn-off
-    delay(100);          // Wait for 0.1 second
-    digitalWrite(BOARD_LED_PIN, LOW);  // set to as LOW LED is turn-on
-    delay(100);          // Wait for 0.1 second
+    Dxl.setPosition(BASE_ID, 300, ASpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 412, ASpeed);
+    Dxl.setPosition(RACHIS_ID, 300, ASpeed);
+    digitalWrite(BOARD_LED_PIN, HIGH);
+    delay(5000);
+  
+    Dxl.setPosition(BASE_ID, 0, ASpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 512, ASpeed);
+    Dxl.setPosition(RACHIS_ID, 0, ASpeed);
+    digitalWrite(BOARD_LED_PIN, LOW);
+    delay(5000);// it has more delay time for slow movement
   }
   if(SpeedID == 'b') {
-    digitalWrite(BOARD_LED_PIN, HIGH); // set to as HIGH LED is turn-off
-    delay(500);          // Wait for 0.1 second
-    digitalWrite(BOARD_LED_PIN, LOW);  // set to as LOW LED is turn-on
-    delay(500);          // Wait for 0.1 second
+    Dxl.setPosition(BASE_ID, 300, BSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 412, BSpeed);
+    Dxl.setPosition(RACHIS_ID, 300, BSpeed);
+    digitalWrite(BOARD_LED_PIN, HIGH);
+    delay(10000);
+  
+    Dxl.setPosition(BASE_ID, 0, BSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 512, BSpeed);
+    Dxl.setPosition(RACHIS_ID, 0, BSpeed);
+    digitalWrite(BOARD_LED_PIN, LOW);
+    delay(10000);// it has more delay time for slow movement
   }
   if(SpeedID == 'c') {
-    digitalWrite(BOARD_LED_PIN, HIGH); // set to as HIGH LED is turn-off
-    delay(1000);          // Wait for 0.1 second
-    digitalWrite(BOARD_LED_PIN, LOW);  // set to as LOW LED is turn-on
-    delay(1000);          // Wait for 0.1 second
+    Dxl.setPosition(BASE_ID, 300, CSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 412, CSpeed);
+    Dxl.setPosition(RACHIS_ID, 300, CSpeed);
+    digitalWrite(BOARD_LED_PIN, HIGH);
+    delay(15000);
+  
+    Dxl.setPosition(BASE_ID, 0, CSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 512, CSpeed);
+    Dxl.setPosition(RACHIS_ID, 0, CSpeed);
+    digitalWrite(BOARD_LED_PIN, LOW);
+    delay(15000);// it has more delay time for slow movement
   }
   if(SpeedID == 'd') {
-    digitalWrite(BOARD_LED_PIN, HIGH); // set to as HIGH LED is turn-off
-    delay(1500);          // Wait for 0.1 second
-    digitalWrite(BOARD_LED_PIN, LOW);  // set to as LOW LED is turn-on
-    delay(1500);          // Wait for 0.1 second
+    Dxl.setPosition(BASE_ID, 300, DSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 412, DSpeed);
+    Dxl.setPosition(RACHIS_ID, 300, DSpeed);
+    digitalWrite(BOARD_LED_PIN, HIGH);
+    delay(20000);
+  
+    Dxl.setPosition(BASE_ID, 0, DSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 512, DSpeed);
+    Dxl.setPosition(RACHIS_ID, 0, DSpeed);
+    digitalWrite(BOARD_LED_PIN, LOW);
+    delay(20000);// it has more delay time for slow movement
   }
 }
 
 void usbInterrupt(byte* buffer, byte nCount){
   SpeedID = (int)buffer[0];
   if( 'a' <= SpeedID && SpeedID == 'd' ) {
-    DxSpeed = ((int)buffer[1]-48) * 1000;
-    DxSpeed += ((int)buffer[2]-48) * 100;
-    DxSpeed += ((int)buffer[3]-48) * 10;
-    DxSpeed += ((int)buffer[4]-48);
+    NaturalSpeed = ((int)buffer[1]-48) * 1000;
+    NaturalSpeed += ((int)buffer[2]-48) * 100;
+    NaturalSpeed += ((int)buffer[3]-48) * 10;
+    NaturalSpeed += ((int)buffer[4]-48);
   } 
 }
