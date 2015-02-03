@@ -3,7 +3,7 @@
 #define DXL_BUS_SERIAL2 2  //Dynamixel on Serial2(USART2)  <-LN101,BT210
 #define DXL_BUS_SERIAL3 3  //Dynamixel on Serial3(USART3)  <-OpenCM 485EXP
 /* Dynamixel ID defines */
-#define BASE_ID 1
+#define BASE_ID 16
 #define PEDUNCLE_ID 17  // 花柄
 #define RACHIS_ID 4    // 花軸
 
@@ -13,13 +13,13 @@
 
 int NaturalSpeed = 100;  // as botany
 
-int ASpeed = 400;
-int BSpeed = 300;
-int CSpeed = 200;
-int DSpeed = 100;
-
 double DxSpeed = 300;
 int SpeedID = 'a';
+
+int ASpeed = 15;
+int BSpeed = 10;
+int CSpeed = 3;
+int DSpeed = 1;
 
 Dynamixel Dxl(DXL_BUS_SERIAL1);
 
@@ -34,82 +34,70 @@ void setup() {
   Dxl.jointMode(RACHIS_ID);
   
   // Initial position
-  Dxl.setPosition(BASE_ID, 150, 300);
-  Dxl.setPosition(PEDUNCLE_ID, 0, 300);
-  Dxl.setPosition(RACHIS_ID, 512, 300);
-  delay(1000);// it has more delay time for slow movement
+  Dxl.setPosition(BASE_ID, 200, 20);  //150
+  Dxl.setPosition(PEDUNCLE_ID, 462, 20);  //0
+  Dxl.setPosition(RACHIS_ID, 400, 20);  //512
+  delay(5000);// it has more delay time for slow movement
 }
 
 void loop() {  
-  /* hide */
-  //Dxl.setPosition(BASE_ID, 300, NATURAL_SPEED);
-  //Dxl.setPosition(PEDUNCLE_ID, 412, NATURAL_SPEED);
-  //Dxl.setPosition(RACHIS_ID, 300, NATURAL_SPEED);
-  //delay(2000);
-  
-  /* see */
-  //Dxl.setPosition(BASE_ID, 0, NATURAL_SPEED);
-  //Dxl.setPosition(PEDUNCLE_ID, 512, NATURAL_SPEED);
-  //Dxl.setPosition(RACHIS_ID, 0, NATURAL_SPEED);
-  //delay(2000);// it has more delay time for slow movement
-  
   if(SpeedID == 'a') {
-    Dxl.setPosition(BASE_ID, 300, ASpeed);
-    Dxl.setPosition(PEDUNCLE_ID, 412, ASpeed);
-    Dxl.setPosition(RACHIS_ID, 300, ASpeed);
-    digitalWrite(BOARD_LED_PIN, HIGH);
-    delay(5000);
-  
-    Dxl.setPosition(BASE_ID, 0, ASpeed);
-    Dxl.setPosition(PEDUNCLE_ID, 512, ASpeed);
-    Dxl.setPosition(RACHIS_ID, 0, ASpeed);
-    digitalWrite(BOARD_LED_PIN, LOW);
-    delay(5000);// it has more delay time for slow movement
-  }
-  if(SpeedID == 'b') {
-    Dxl.setPosition(BASE_ID, 300, BSpeed);
-    Dxl.setPosition(PEDUNCLE_ID, 412, BSpeed);
-    Dxl.setPosition(RACHIS_ID, 300, BSpeed);
+    Dxl.setPosition(BASE_ID, 50, ASpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 100, ASpeed);
+    Dxl.setPosition(RACHIS_ID, 512, ASpeed);
     digitalWrite(BOARD_LED_PIN, HIGH);
     delay(10000);
   
-    Dxl.setPosition(BASE_ID, 0, BSpeed);
-    Dxl.setPosition(PEDUNCLE_ID, 512, BSpeed);
-    Dxl.setPosition(RACHIS_ID, 0, BSpeed);
+    Dxl.setPosition(BASE_ID, 200, ASpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 462, ASpeed);
+    Dxl.setPosition(RACHIS_ID, 400, ASpeed);
     digitalWrite(BOARD_LED_PIN, LOW);
     delay(10000);// it has more delay time for slow movement
   }
-  if(SpeedID == 'c') {
-    Dxl.setPosition(BASE_ID, 300, CSpeed);
-    Dxl.setPosition(PEDUNCLE_ID, 412, CSpeed);
-    Dxl.setPosition(RACHIS_ID, 300, CSpeed);
+  if(SpeedID == 'b') {
+    Dxl.setPosition(BASE_ID, 50, BSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 100, BSpeed);
+    Dxl.setPosition(RACHIS_ID, 512, BSpeed);
     digitalWrite(BOARD_LED_PIN, HIGH);
     delay(15000);
   
-    Dxl.setPosition(BASE_ID, 0, CSpeed);
-    Dxl.setPosition(PEDUNCLE_ID, 512, CSpeed);
-    Dxl.setPosition(RACHIS_ID, 0, CSpeed);
+    Dxl.setPosition(BASE_ID, 200, BSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 462, BSpeed);
+    Dxl.setPosition(RACHIS_ID, 400, BSpeed);
     digitalWrite(BOARD_LED_PIN, LOW);
     delay(15000);// it has more delay time for slow movement
   }
-  if(SpeedID == 'd') {
-    Dxl.setPosition(BASE_ID, 300, DSpeed);
-    Dxl.setPosition(PEDUNCLE_ID, 412, DSpeed);
-    Dxl.setPosition(RACHIS_ID, 300, DSpeed);
+  if(SpeedID == 'c') {
+    Dxl.setPosition(BASE_ID, 50, CSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 100, CSpeed);
+    Dxl.setPosition(RACHIS_ID, 512, CSpeed);
     digitalWrite(BOARD_LED_PIN, HIGH);
     delay(20000);
   
-    Dxl.setPosition(BASE_ID, 0, DSpeed);
-    Dxl.setPosition(PEDUNCLE_ID, 512, DSpeed);
-    Dxl.setPosition(RACHIS_ID, 0, DSpeed);
+    Dxl.setPosition(BASE_ID, 200, CSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 462, CSpeed);
+    Dxl.setPosition(RACHIS_ID, 400, CSpeed);
     digitalWrite(BOARD_LED_PIN, LOW);
     delay(20000);// it has more delay time for slow movement
+  }
+  if(SpeedID == 'd') {
+    Dxl.setPosition(BASE_ID, 50, DSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 100, DSpeed);
+    Dxl.setPosition(RACHIS_ID, 512, DSpeed);
+    digitalWrite(BOARD_LED_PIN, HIGH);
+    delay(30000);
+  
+    Dxl.setPosition(BASE_ID, 200, DSpeed);
+    Dxl.setPosition(PEDUNCLE_ID, 462, DSpeed);
+    Dxl.setPosition(RACHIS_ID, 400, DSpeed);
+    digitalWrite(BOARD_LED_PIN, LOW);
+    delay(30000);// it has more delay time for slow movement
   }
 }
 
 void usbInterrupt(byte* buffer, byte nCount){
   SpeedID = (int)buffer[0];
-  if( 'a' <= SpeedID && SpeedID == 'd' ) {
+  if( 'a' <= SpeedID && SpeedID <= 'd' ) {
     NaturalSpeed = ((int)buffer[1]-48) * 1000;
     NaturalSpeed += ((int)buffer[2]-48) * 100;
     NaturalSpeed += ((int)buffer[3]-48) * 10;
